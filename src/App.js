@@ -1,26 +1,23 @@
 import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-function App() {
+import "./App.css";
+import "react-bulma-components/dist/react-bulma-components.min.css";
+import GuestView from "./components/GuestView";
+import Home from "./components/Home";
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Router>
+        <Switch>
+          {/* GUEST VIEW PAGE - A user visiting a card someone else wrote for them sees this view. */}
+          <Route path="/card/:cardId" component={GuestView} />
+
+          {/* HOMEPAGE - This is where a user will create a card. */}
+          <Route path="/" component={Home} />
+        </Switch>
+      </Router>
+    </>
   );
 }
-
-export default App;
