@@ -12,7 +12,7 @@ export default function App() {
       <Router>
         <Switch>
           {/* GUEST VIEW PAGE - A user visiting a card someone else wrote for them sees this view. */}
-          <Route path="/card/:cardId" component={GuestView} />
+          <Route path="/card/:cardUrl" component={GuestView} />
 
           {/* HOMEPAGE - This is where a user will create a card. */}
           <Route path="/" component={Home} />

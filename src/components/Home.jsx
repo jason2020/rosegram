@@ -17,29 +17,32 @@ export default class Home extends Component {
 
     this.state = {
       stage: 1,
+      message: "",
+      // receiver: "",
+      // sender: "",
     };
+
+    this.handleFormData = this.handleFormData.bind(this);
+  }
+
+  handleFormData({ message }) {
+    this.setState({ message });
   }
 
   render() {
     // Conditionally render components based on what stage we are on
-    const { stage } = this.state;
+    const { stage, message } = this.state;
     let stageComps;
     if (stage === 1) {
-      stageComps = (
-        <GetStarted handleClick={() => this.setState({ stage: 2 })} />
-      );
+      stageComps = <GetStarted handleClick={() => this.setState({ stage: 2 })} />;
     } else if (stage === 2) {
-      stageComps = <ContentForm />;
+      stageComps = <ContentForm handleFormData={this.handleFormData} />;
     }
 
     return (
       <>
-        <div style={{ border: "2px solid black" }}>
-          <h1>DEBUGGING DELETE LATER BRANDON</h1>
-          <p>{stage}</p>
-        </div>
         <div className="container has-text-centered">
-          <Card stage={stage} />
+          <Card stage={stage} message={message} />
           {stageComps}
         </div>
       </>

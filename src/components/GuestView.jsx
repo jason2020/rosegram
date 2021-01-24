@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { AwesomeButton } from "react-awesome-button";
+import axios from "axios";
 import Card from "./Card";
 
 /*
@@ -17,13 +18,30 @@ export default class GuestView extends Component {
 
     this.state = {
       stage: 1,
+      message: "",
+      // receiver: "",
+      // sender: "",
     };
 
     this.handleClick = this.handleClick.bind(this); // https://stackoverflow.com/questions/32317154/react-uncaught-typeerror-cannot-read-property-setstate-of-undefined
   }
 
   componentDidMount() {
-    // FETCH API HERE
+    // TODO switch to async await
+    // Get Card URL ID from React Router
+    // eslint-disable-next-line react/prop-types, react/destructuring-assignment
+    const { cardUrl } = this.props.match.params;
+    // Fetch card from API
+    const api = axios.create({ baseURL: process.env.REACT_APP_BACKEND_DOMAIN });
+    api
+      .get(`/cards/${cardUrl}`)
+      .then((res) => {
+        this.setState({ message: res.data.message });
+      })
+      .catch((err) => {
+        console.log(err.response);
+        // TODO take user to error page
+      });
   }
 
   handleClick() {
@@ -34,20 +52,19 @@ export default class GuestView extends Component {
 
   render() {
     // Conditionally render components based on what stage we are on
-    const { stage } = this.state;
-    // eslint-disable-next-line react/prop-types, react/destructuring-assignment
-    const { cardId } = this.props.match.params;
+    const { stage, message } = this.state;
 
     return (
       <>
         <div className="container has-text-centered">
-          <Card stage={stage} />
+          <Card stage={stage} message={message} />
           {/* See GetStarted.jsx for more info in clickable divs in React */}
           <div
             role="button"
             tabIndex={0}
             onClick={this.handleClick}
             onKeyDown={this.handleClick}
+            style={{ outlineWidth: 0 }}
           >
             <AwesomeButton type="primary">Open</AwesomeButton>
           </div>

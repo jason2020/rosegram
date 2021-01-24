@@ -6,21 +6,49 @@ export default class Card extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      showCardContents: false, // T: show written message. F: show card front cover design. Default: F
+    };
   }
 
   render() {
-    const { stage } = this.props;
+    const { stage, message } = this.props;
+    const { showCardContents } = this.state;
     return (
       <>
-        {/* https://stackoverflow.com/questions/2941189/how-to-overlay-one-div-over-another-div */}
-        <div id="cardContainer" className={styles.container}>
-          <img
-            alt="lol"
-            style={{ height: "100%" }}
-            src="https://cdn11.bigcommerce.com/s-zxbk4h26/images/stencil/1280x1280/products/111/327/CC-7875-xlg__59679.1430947336.jpg?c=2"
-          />
-          <p className={styles.overlay}>I &lt;3 YOU</p>
+        <div
+          className={`${styles.flipCard} ${showCardContents ? "active" : ""}`}
+          style={{ margin: "5rem auto" }}
+          role="button"
+          tabIndex={0}
+          onClick={() =>
+            this.setState((state) => ({
+              showCardContents: !state.showCardContents,
+            }))
+          }
+          onKeyDown={() =>
+            this.setState((state) => ({
+              showCardContents: !state.showCardContents,
+            }))
+          }
+        >
+          <div
+            className={styles.flipCardInner}
+            style={{
+              transform: showCardContents ? "rotateX(180deg)" : "none",
+            }}
+          >
+            <div className={styles.flipCardFront}>
+              <img
+                src="https://www.w3schools.com/howto/img_avatar.png"
+                alt="Card Design"
+                style={{ width: "300px", height: "300px" }}
+              />
+            </div>
+            <div className={`content ${styles.flipCardBack}`}>
+              <p className={styles.previewMessage}>{message}</p>
+            </div>
+          </div>
         </div>
       </>
     );
