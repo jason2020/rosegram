@@ -62,6 +62,8 @@ https://stackoverflow.com/questions/2941189/how-to-overlay-one-div-over-another-
 }
 
 .previewMessage {
-  padding: 0.5rem;
-  overflow-wrap: break-word;
+  padding: 1rem;
+  text-align: left;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }

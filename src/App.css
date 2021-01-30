@@ -24,4 +24,9 @@ button.awesome-button {
   --button-anchor-color-light: #4c3016;
   --button-anchor-color-hover: #f1bfa0;
   --button-anchor-border: 1px solid #8c633c; */
+  -webkit-transition: opacity 0.3s ease-in-out;
+  -moz-transition: opacity 0.3s ease-in-out;
+  -ms-transition: opacity 0.3s ease-in-out;
+  -o-transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
 }
