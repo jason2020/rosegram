@@ -42,7 +42,7 @@ export default class Home extends Component {
     return (
       <>
         <div className="container has-text-centered">
-          <Card stage={stage} message={message} />
+          <Card showCardContents={stage === 2} message={message} />
           {stageComps}
         </div>
       </>

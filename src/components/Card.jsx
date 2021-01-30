@@ -6,31 +6,28 @@ export default class Card extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      showCardContents: false, // T: show written message. F: show card front cover design. Default: F
-    };
+    this.state = {};
   }
 
   render() {
-    const { stage, message } = this.props;
-    const { showCardContents } = this.state;
+    const { showCardContents, message } = this.props;
     return (
       <>
         <div
           className={`${styles.flipCard} ${showCardContents ? "active" : ""}`}
           style={{ margin: "5rem auto" }}
-          role="button"
-          tabIndex={0}
-          onClick={() =>
-            this.setState((state) => ({
-              showCardContents: !state.showCardContents,
-            }))
-          }
-          onKeyDown={() =>
-            this.setState((state) => ({
-              showCardContents: !state.showCardContents,
-            }))
-          }
+          // role="button"
+          // tabIndex={0}
+          // onClick={() =>
+          //   this.setState((state) => ({
+          //     showCardContents: !state.showCardContents,
+          //   }))
+          // }
+          // onKeyDown={() =>
+          //   this.setState((state) => ({
+          //     showCardContents: !state.showCardContents,
+          //   }))
+          // }
         >
           <div
             className={styles.flipCardInner}
@@ -40,9 +37,9 @@ export default class Card extends Component {
           >
             <div className={styles.flipCardFront}>
               <img
-                src="https://www.w3schools.com/howto/img_avatar.png"
+                src="https://ctl.s6img.com/society6/img/rF8sAD9XfXXrzD3ulg1drLHTTdk/w_700/duvet-covers/swatch/~artwork,fw_6001,fh_6001,fx_750,fy_750,iw_4499,ih_4499/s6-original-art-uploads/society6/uploads/misc/6430f731da624d68929c30f610a3224d/~~/valentines-day-card-funny-sloth-with-a-red-heart736939-duvet-covers.jpg"
                 alt="Card Design"
-                style={{ width: "300px", height: "300px" }}
+                style={{ width: "500px", height: "500px" }}
               />
             </div>
             <div className={`content ${styles.flipCardBack}`}>
@@ -56,5 +53,5 @@ export default class Card extends Component {
 }
 
 Card.propTypes = {
-  stage: PropTypes.number.isRequired,
+  showCardContents: PropTypes.bool.isRequired,
 };

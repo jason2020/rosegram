@@ -74,9 +74,13 @@ export default class TextBox extends React.Component {
               Sender:
             </label>
             <Field className="input" id="sender" name="sender" type="text" />
-
+            <br />
+            <br />
+            <br />
             <div role="button" tabIndex={0}>
-              <AwesomeButton type="primary">SENDDDD</AwesomeButton>
+              <AwesomeButton type="primary" className="awesome-button">
+                SEND
+              </AwesomeButton>
             </div>
           </Form>
         )}

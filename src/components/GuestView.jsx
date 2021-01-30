@@ -57,16 +57,18 @@ export default class GuestView extends Component {
     return (
       <>
         <div className="container has-text-centered">
-          <Card stage={stage} message={message} />
+          <Card showCardContents={stage === 2} message={message} />
           {/* See GetStarted.jsx for more info in clickable divs in React */}
           <div
             role="button"
             tabIndex={0}
             onClick={this.handleClick}
             onKeyDown={this.handleClick}
-            style={{ outlineWidth: 0 }}
+            style={{ outlineWidth: 0, display: stage === 1 ? "initial" : "none" }}
           >
-            <AwesomeButton type="primary">Open</AwesomeButton>
+            <AwesomeButton type="primary" className="awesome-button">
+              Open
+            </AwesomeButton>
           </div>
         </div>
       </>
