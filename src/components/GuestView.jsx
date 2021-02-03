@@ -19,15 +19,13 @@ export default class GuestView extends Component {
     this.state = {
       stage: 1,
       message: "",
+      showCardContents: false,
       // receiver: "",
       // sender: "",
     };
-
-    this.handleClick = this.handleClick.bind(this); // https://stackoverflow.com/questions/32317154/react-uncaught-typeerror-cannot-read-property-setstate-of-undefined
   }
 
   componentDidMount() {
-    // TODO switch to async await
     // Get Card URL ID from React Router
     // eslint-disable-next-line react/prop-types, react/destructuring-assignment
     const { cardUrl } = this.props.match.params;
@@ -39,37 +37,41 @@ export default class GuestView extends Component {
         this.setState({ message: res.data.message });
       })
       .catch((err) => {
-        console.log(err.response);
-        // TODO take user to error page
+        console.log(err, err.response);
       });
-  }
-
-  handleClick() {
-    this.setState((state) => ({
-      stage: state.stage + 1,
-    }));
   }
 
   render() {
     // Conditionally render components based on what stage we are on
-    const { stage, message } = this.state;
+    const { stage, message, showCardContents } = this.state;
 
     return (
       <>
         <div className="container has-text-centered">
-          <Card showCardContents={stage === 2} message={message} />
-          {/* See GetStarted.jsx for more info in clickable divs in React */}
-          <div
-            role="button"
-            tabIndex={0}
-            onClick={this.handleClick}
-            onKeyDown={this.handleClick}
-            style={{ outlineWidth: 0, display: stage === 1 ? "initial" : "none" }}
+          <Card showCardContents={showCardContents} message={message} />
+
+          <AwesomeButton
+            type="primary"
+            className="awesome-button"
+            onPress={() =>
+              this.setState((state) => ({
+                stage: state.stage + 1,
+                showCardContents: true,
+              }))
+            }
+            style={{ display: stage === 1 ? "initial" : "none" }}
           >
-            <AwesomeButton type="primary" className="awesome-button">
-              Open
-            </AwesomeButton>
-          </div>
+            Open
+          </AwesomeButton>
+
+          <AwesomeButton
+            className="awesome-button"
+            type="primary"
+            style={{ display: stage === 2 ? "initial" : "none" }}
+            onPress={() => this.setState((state) => ({ showCardContents: !state.showCardContents }))}
+          >
+            Flip Card
+          </AwesomeButton>
         </div>
       </>
     );

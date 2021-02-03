@@ -59,6 +59,13 @@ https://stackoverflow.com/questions/2941189/how-to-overlay-one-div-over-another-
   color: #23305c;
   font-weight: 500;
   transform: rotateX(180deg);
+  overflow-y: auto;
+
+  /* Prevent user select */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .previewMessage {

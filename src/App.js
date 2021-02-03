@@ -5,6 +5,7 @@ import "./App.css";
 import "react-bulma-components/dist/react-bulma-components.min.css";
 import GuestView from "./components/GuestView";
 import Home from "./components/Home";
+import PageNotFound from "./components/PageNotFound";
 
 export default function App() {
   return (
@@ -15,7 +16,10 @@ export default function App() {
           <Route path="/card/:cardUrl" component={GuestView} />
 
           {/* HOMEPAGE - This is where a user will create a card. */}
-          <Route path="/" component={Home} />
+          <Route path="/" component={Home} exact />
+
+          {/* 404 */}
+          <Route path="/" component={PageNotFound} />
         </Switch>
       </Router>
     </>

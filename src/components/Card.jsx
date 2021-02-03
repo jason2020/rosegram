@@ -13,22 +13,7 @@ export default class Card extends Component {
     const { showCardContents, message } = this.props;
     return (
       <>
-        <div
-          className={`${styles.flipCard} ${showCardContents ? "active" : ""}`}
-          style={{ margin: "5rem auto" }}
-          // role="button"
-          // tabIndex={0}
-          // onClick={() =>
-          //   this.setState((state) => ({
-          //     showCardContents: !state.showCardContents,
-          //   }))
-          // }
-          // onKeyDown={() =>
-          //   this.setState((state) => ({
-          //     showCardContents: !state.showCardContents,
-          //   }))
-          // }
-        >
+        <div className={`${styles.flipCard} ${showCardContents ? "active" : ""}`} style={{ margin: "5rem auto" }}>
           <div
             className={styles.flipCardInner}
             style={{
@@ -54,4 +39,5 @@ export default class Card extends Component {
 
 Card.propTypes = {
   showCardContents: PropTypes.bool.isRequired,
+  message: PropTypes.string.isRequired,
 };

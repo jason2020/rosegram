@@ -3,7 +3,6 @@ import { Formik, Field, Form } from "formik";
 import PropTypes from "prop-types";
 import "./ContentForm.module.css";
 import "react-awesome-button/dist/styles.css";
-import Card from "./Card";
 
 // https://formik.org/docs/examples/basic
 // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/302
@@ -11,15 +10,14 @@ export default class ContentForm extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
-    this.state = { message: "", recipientEmail: "", recipientName: "", sender: "" };
+    this.state = {}; // message: "", recipientEmail: "", recipientName: "", sender: ""
   }
 
   handleChange(e) {
+    const { handleFormData } = this.props;
     const key = e.target.id;
-    this.setState({ [key]: e.target.value });
-    this.props.handleFormData({ [key]: e.target.value });
-
-    return true;
+    // this.setState({ [key]: e.target.value });
+    handleFormData({ [key]: e.target.value });
   }
 
   render() {
@@ -27,8 +25,8 @@ export default class ContentForm extends React.Component {
     const displayFields = fields.split(" ");
     return (
       <Formik initialValues={{ message: "", recipientEmail: "", sender: "", recipientName: "" }}>
-        {/* eslint-disable-next-line no-return-assign */}
-        {({ values }) => (
+        {() => (
+          // {({ values }) => (
           <Form onChange={(e) => this.handleChange(e)}>
             <div style={{ display: displayFields.indexOf("recipientName") > -1 ? "initial" : "none" }}>
               <label className="label" htmlFor="recipientName">
@@ -70,6 +68,7 @@ export default class ContentForm extends React.Component {
   }
 }
 
-Card.propTypes = {
+ContentForm.propTypes = {
   fields: PropTypes.string.isRequired,
+  handleFormData: PropTypes.func.isRequired,
 };

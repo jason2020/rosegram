@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { AwesomeButton } from "react-awesome-button";
+import ReactLoading from "react-loading";
 
 import Card from "./Card";
 import ContentForm from "./ContentForm";
@@ -26,6 +27,7 @@ export default class Home extends Component {
       recipientName: "",
       sender: "",
       showCardContents: false,
+      showLoading: false, // show loading bar after submitting a card
     };
 
     this.handleFormData = this.handleFormData.bind(this);
@@ -56,7 +58,7 @@ export default class Home extends Component {
 
   render() {
     // Conditionally render components based on what stage we are on
-    const { stage, message, recipientEmail, recipientName, showCardContents } = this.state;
+    const { stage, message, recipientEmail, recipientName, showCardContents, showLoading } = this.state;
     let stageComps;
     if (stage === 1) {
       stageComps = <StageButton message="Get Started" handleClick={() => this.setState({ stage: 2 })} />;
@@ -82,9 +84,19 @@ export default class Home extends Component {
       stageComps = (
         <>
           <ContentForm fields="sender" handleFormData={this.handleFormData} />
+          <div
+            style={{
+              display: showLoading ? "block" : "none",
+            }}
+          >
+            <div style={{ paddingRight: "2rem", margin: "0 auto", width: "0%" }}>
+              <ReactLoading type="spin" color="#ea9dc0" width="2rem" />
+            </div>
+          </div>
           <AwesomeButton
             className="awesome-button"
             type="primary"
+            style={{ opacity: showLoading ? 0 : 1 }}
             onPress={() => this.setState((state) => ({ showCardContents: !state.showCardContents }))}
           >
             Flip Card
@@ -92,10 +104,12 @@ export default class Home extends Component {
           &nbsp;&nbsp;&nbsp;
           <StageButton
             message="Send Rosegram"
-            showArrow="false"
+            showArrow={false}
+            disabled={showLoading}
             handleClick={async () => {
               await this.handleFormSubmit();
-              this.setState({ stage: 5 });
+              this.setState({ showLoading: true });
+              setTimeout(() => this.setState({ stage: 5 }), 2000);
             }}
           />
           {/* <progress style={{ color: "white !important" }} className="progress is-dark" max="100" /> */}
@@ -108,7 +122,7 @@ export default class Home extends Component {
     return (
       <>
         <div className="container has-text-centered">
-          <Card showCardContents={showCardContents || stage === 3} message={message} />
+          <Card showCardContents={(showCardContents || stage === 3) && stage !== 5} message={message} />
           {stageComps}
           <br />
           <br />
