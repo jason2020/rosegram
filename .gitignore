@@ -107,6 +107,7 @@ dist
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+.docker.env
 
 # React
 build/
