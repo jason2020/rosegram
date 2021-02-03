@@ -1,6 +1,7 @@
 // https://www.codementor.io/@engineerapart/getting-started-with-postgresql-on-mac-osx-are8jcopb
 const { Sequelize, DataTypes } = require("sequelize");
 const validator = require("validator");
+const sendRosegram = require("./ses.service");
 
 // Setup DB
 const sequelize = new Sequelize(process.env.SQL_DATABASE, process.env.SQL_USERNAME, process.env.SQL_PASSWORD, {
@@ -101,6 +102,9 @@ class CardController {
         cardUrl,
         cardDesign: sanitized.cardDesign,
       });
+
+      // Send email to rosegram email
+      sendRosegram(card.cardUrl, card.recipientEmail);
 
       // Return successfully-created card
       return res.status(201).json(card.toJSON());
