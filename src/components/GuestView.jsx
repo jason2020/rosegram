@@ -30,13 +30,14 @@ export default class GuestView extends Component {
     // eslint-disable-next-line react/prop-types, react/destructuring-assignment
     const { cardUrl } = this.props.match.params;
     // Fetch card from API
-    const api = axios.create({ baseURL: process.env.REACT_APP_BACKEND_DOMAIN });
+    const api = axios.create({ baseURL: process.env.REACT_APP_BACKEND_DOMAIN || "/api" });
     api
       .get(`/cards/${cardUrl}`)
       .then((res) => {
         this.setState({ message: res.data.message });
       })
       .catch((err) => {
+        // TODO display error message
         console.log(err, err.response);
       });
   }

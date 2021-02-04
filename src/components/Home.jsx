@@ -33,7 +33,7 @@ export default class Home extends Component {
     this.handleFormData = this.handleFormData.bind(this);
 
     // API
-    this.api = axios.create({ baseURL: process.env.REACT_APP_BACKEND_DOMAIN });
+    this.api = axios.create({ baseURL: process.env.REACT_APP_BACKEND_DOMAIN || "/api" });
   }
 
   handleFormData(formData) {
@@ -43,7 +43,6 @@ export default class Home extends Component {
   async handleFormSubmit() {
     const { message, recipientEmail, recipientName, sender } = this.state;
     // REQUIRED: "message", "recipientName", "recipientEmail", "sender", "cardDesign"
-    console.log(process.env.REACT_APP_BACKEND_DOMAIN);
     try {
       await this.api.post("/cards", {
         message,
