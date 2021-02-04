@@ -43,6 +43,7 @@ export default class Home extends Component {
   async handleFormSubmit() {
     const { message, recipientEmail, recipientName, sender } = this.state;
     // REQUIRED: "message", "recipientName", "recipientEmail", "sender", "cardDesign"
+    console.log(process.env.REACT_APP_BACKEND_DOMAIN);
     try {
       await this.api.post("/cards", {
         message,
@@ -51,7 +52,9 @@ export default class Home extends Component {
         sender,
         cardDesign: 1,
       });
+      setTimeout(() => this.setState({ stage: 5 }), 2000);
     } catch (e) {
+      // TODO display error message
       console.log(e, e.response);
     }
   }
@@ -107,9 +110,8 @@ export default class Home extends Component {
             showArrow={false}
             disabled={showLoading}
             handleClick={async () => {
-              await this.handleFormSubmit();
               this.setState({ showLoading: true });
-              setTimeout(() => this.setState({ stage: 5 }), 2000);
+              await this.handleFormSubmit();
             }}
           />
           {/* <progress style={{ color: "white !important" }} className="progress is-dark" max="100" /> */}
