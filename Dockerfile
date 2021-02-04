@@ -1,4 +1,5 @@
-FROM node:alpine AS builder
+FROM node:alpine
+#  AS builder
 
 WORKDIR /app
 
@@ -11,7 +12,8 @@ COPY public/ public/
 
 RUN npm run build
 
-FROM node:alpine AS prod
+FROM node:alpine
+#  AS prod
 
 ENV NODE_ENV production
 ENV PORT 80
@@ -24,7 +26,7 @@ RUN npm ci --production
 
 COPY . .
 
-COPY --from=builder /app/build build/
+COPY --from=0 /app/build build/
 
 EXPOSE 80
 
