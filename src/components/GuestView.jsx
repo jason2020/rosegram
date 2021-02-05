@@ -9,6 +9,7 @@ import Card from "./Card";
  */
 export default class GuestView extends Component {
   /*
+   * Stage 0: send API call to backend to retrieve card details
    * Stage 1: initial display of card. Next Step: user clicks "Open Card"
    * Stage 2: user sees card contents. Next Step: user clicks "Close Card"
    * Stage 3: done. display option to write your own card to the user (take them to the homepage)
@@ -17,10 +18,10 @@ export default class GuestView extends Component {
     super(props);
 
     this.state = {
-      stage: 1,
+      stage: 0,
       message: "",
       showCardContents: false,
-      cardDesign: 1,
+      cardDesign: 0,
       // receiver: "",
       // sender: "",
     };
@@ -35,7 +36,7 @@ export default class GuestView extends Component {
     api
       .get(`/cards/${cardUrl}`)
       .then((res) => {
-        this.setState({ message: res.data.message, cardDesign: res.data.cardDesign });
+        this.setState({ stage: 1, message: res.data.message, cardDesign: +res.data.cardDesign });
       })
       .catch((err) => {
         console.log(err, err.response);
@@ -52,7 +53,9 @@ export default class GuestView extends Component {
     return (
       <>
         <div className="container has-text-centered">
-          <Card showCardContents={showCardContents} message={message} cardDesign={cardDesign} />
+          <div style={{ display: stage === 0 ? "none" : "initial" }}>
+            <Card showCardContents={showCardContents} message={message} cardDesign={cardDesign} />
+          </div>
 
           <AwesomeButton
             type="primary"
