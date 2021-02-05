@@ -31,6 +31,7 @@ export default class Home extends Component {
     };
 
     this.handleFormData = this.handleFormData.bind(this);
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
 
     // API
     this.api = axios.create({ baseURL: process.env.REACT_APP_BACKEND_DOMAIN || "/api" });
@@ -42,6 +43,7 @@ export default class Home extends Component {
 
   async handleFormSubmit() {
     const { message, recipientEmail, recipientName, sender } = this.state;
+    this.setState({ showLoading: true });
     // REQUIRED: "message", "recipientName", "recipientEmail", "sender", "cardDesign"
     try {
       await this.api.post("/cards", {
@@ -51,10 +53,12 @@ export default class Home extends Component {
         sender,
         cardDesign: 1,
       });
-      setTimeout(() => this.setState({ stage: 5 }), 2000);
+      setTimeout(() => this.setState({ stage: 5 }), 1500);
     } catch (e) {
-      // TODO display error message
       console.log(e, e.response);
+      if (!alert("Error with card creation. Press OK to try again.")) {
+        this.setState({ showLoading: false, stage: 2 });
+      }
     }
   }
 
@@ -108,12 +112,8 @@ export default class Home extends Component {
             message="Send Rosegram"
             showArrow={false}
             disabled={showLoading}
-            handleClick={async () => {
-              this.setState({ showLoading: true });
-              await this.handleFormSubmit();
-            }}
+            handleClick={this.handleFormSubmit}
           />
-          {/* <progress style={{ color: "white !important" }} className="progress is-dark" max="100" /> */}
         </>
       );
     } else if (stage === 5) {
