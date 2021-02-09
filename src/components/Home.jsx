@@ -3,13 +3,13 @@ import axios from "axios";
 import { AwesomeButton } from "react-awesome-button";
 import ReactLoading from "react-loading";
 
-import Card, { CARD_DESIGNS } from "./Card";
+import Card, { designDictionary } from "./Card";
 import ContentForm from "./ContentForm";
 import StageButton from "./StageButton";
 import SubmitSuccess from "./SubmitSuccess";
 import "react-bulma-components/dist/react-bulma-components.min.css";
 
-const CARDS_AMOUNT = Object.keys(CARD_DESIGNS).length;
+const CARDS_AMOUNT = Object.keys(designDictionary).length;
 export default class Home extends Component {
   /*
    * Stage 1: initial display of website. Next Step: user clicks "Start"
@@ -58,9 +58,8 @@ export default class Home extends Component {
       setTimeout(() => this.setState({ stage: 5 }), 1500);
     } catch (e) {
       console.log(e, e.response);
-      if (!alert("Error with card creation. Press OK to try again.")) {
-        this.setState({ showLoading: false, stage: 2 });
-      }
+      alert("Error with card creation. Press OK to try again.");
+      this.setState({ showLoading: false, stage: 2 });
     }
   }
 
