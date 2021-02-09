@@ -21,6 +21,7 @@ export default class GuestView extends Component {
       stage: 0,
       message: "",
       showCardContents: false,
+      sender: "",
       cardDesign: 0,
       // receiver: "",
       // sender: "",
@@ -36,26 +37,41 @@ export default class GuestView extends Component {
     api
       .get(`/cards/${cardUrl}`)
       .then((res) => {
-        this.setState({ stage: 1, message: res.data.message, cardDesign: +res.data.cardDesign });
+        this.setState({
+          stage: 1,
+          message: res.data.message,
+          cardDesign: +res.data.cardDesign,
+          sender: res.data.sender,
+        });
       })
       .catch((err) => {
         console.log(err, err.response);
 
         // Redirect to 404 page
-        window.location.href = "/404";
+        // window.location.href = "/404";
       });
   }
 
   render() {
     // Conditionally render components based on what stage we are on
-    const { stage, message, showCardContents, cardDesign } = this.state;
+    const { stage, message, showCardContents, sender, cardDesign } = this.state;
 
     return (
       <>
         <div className="container has-text-centered">
           <div style={{ display: stage === 0 ? "none" : "initial" }}>
             <Card showCardContents={showCardContents} message={message} cardDesign={cardDesign} />
+            <div className="content">
+              <h5>
+                <strong>From: </strong>
+                {sender}
+              </h5>
+            </div>
           </div>
+
+          <br />
+          <br />
+          <br />
 
           <AwesomeButton
             type="primary"
