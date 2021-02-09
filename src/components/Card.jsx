@@ -52,6 +52,30 @@ export default class Card extends Component {
             </div>
           </div>
         </div>
+        <div>
+          {/* Preload images in the beginning for faster context switching */}
+          {/* img[src={designDictionary[$]} alt="" style={opacity: 0, width: 0}]*20 */}
+          <img src={designDictionary[0]} alt="" style={{ opacity: 0, width: 0 }} />
+          <img src={designDictionary[1]} alt="" style={{ opacity: 0, width: 0 }} />
+          <img src={designDictionary[2]} alt="" style={{ opacity: 0, width: 0 }} />
+          <img src={designDictionary[3]} alt="" style={{ opacity: 0, width: 0 }} />
+          <img src={designDictionary[4]} alt="" style={{ opacity: 0, width: 0 }} />
+          <img src={designDictionary[5]} alt="" style={{ opacity: 0, width: 0 }} />
+          <img src={designDictionary[6]} alt="" style={{ opacity: 0, width: 0 }} />
+          <img src={designDictionary[7]} alt="" style={{ opacity: 0, width: 0 }} />
+          <img src={designDictionary[8]} alt="" style={{ opacity: 0, width: 0 }} />
+          <img src={designDictionary[9]} alt="" style={{ opacity: 0, width: 0 }} />
+          <img src={designDictionary[10]} alt="" style={{ opacity: 0, width: 0 }} />
+          <img src={designDictionary[11]} alt="" style={{ opacity: 0, width: 0 }} />
+          <img src={designDictionary[12]} alt="" style={{ opacity: 0, width: 0 }} />
+          <img src={designDictionary[13]} alt="" style={{ opacity: 0, width: 0 }} />
+          <img src={designDictionary[14]} alt="" style={{ opacity: 0, width: 0 }} />
+          <img src={designDictionary[15]} alt="" style={{ opacity: 0, width: 0 }} />
+          <img src={designDictionary[16]} alt="" style={{ opacity: 0, width: 0 }} />
+          <img src={designDictionary[17]} alt="" style={{ opacity: 0, width: 0 }} />
+          <img src={designDictionary[18]} alt="" style={{ opacity: 0, width: 0 }} />
+          <img src={designDictionary[19]} alt="" style={{ opacity: 0, width: 0 }} />
+        </div>
       </>
     );
   }
