@@ -34,7 +34,6 @@ export default class Card extends Component {
   }
 
   render() {
-    // eslint-disable-next-line
     const { showCardContents, message, cardDesign } = this.props;
     return (
       <>
@@ -61,4 +60,5 @@ export default class Card extends Component {
 Card.propTypes = {
   showCardContents: PropTypes.bool.isRequired,
   message: PropTypes.string.isRequired,
+  cardDesign: PropTypes.number.isRequired,
 };

@@ -9,6 +9,7 @@ import Card from "./Card";
  */
 export default class GuestView extends Component {
   /*
+   * Stage 0: send API call to backend to retrieve card details
    * Stage 1: initial display of card. Next Step: user clicks "Open Card"
    * Stage 2: user sees card contents. Next Step: user clicks "Close Card"
    * Stage 3: done. display option to write your own card to the user (take them to the homepage)
@@ -17,9 +18,10 @@ export default class GuestView extends Component {
     super(props);
 
     this.state = {
-      stage: 1,
+      stage: 0,
       message: "",
       showCardContents: false,
+      cardDesign: 0,
       // receiver: "",
       // sender: "",
     };
@@ -34,23 +36,26 @@ export default class GuestView extends Component {
     api
       .get(`/cards/${cardUrl}`)
       .then((res) => {
-        this.setState({ message: res.data.message });
+        this.setState({ stage: 1, message: res.data.message, cardDesign: +res.data.cardDesign });
       })
       .catch((err) => {
-        // TODO display error message
-        // eslint-disable-next-line
         console.log(err, err.response);
+
+        // Redirect to 404 page
+        window.location.href = "/404";
       });
   }
 
   render() {
     // Conditionally render components based on what stage we are on
-    const { stage, message, showCardContents } = this.state;
+    const { stage, message, showCardContents, cardDesign } = this.state;
 
     return (
       <>
         <div className="container has-text-centered">
-          <Card showCardContents={showCardContents} message={message} />
+          <div style={{ display: stage === 0 ? "none" : "initial" }}>
+            <Card showCardContents={showCardContents} message={message} cardDesign={cardDesign} />
+          </div>
 
           <AwesomeButton
             type="primary"
