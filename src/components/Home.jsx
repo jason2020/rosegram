@@ -3,12 +3,13 @@ import axios from "axios";
 import { AwesomeButton } from "react-awesome-button";
 import ReactLoading from "react-loading";
 
-import Card from "./Card";
+import Card, { designDictionary } from "./Card";
 import ContentForm from "./ContentForm";
 import StageButton from "./StageButton";
 import SubmitSuccess from "./SubmitSuccess";
 import "react-bulma-components/dist/react-bulma-components.min.css";
 
+const cardAmt = Object.keys(designDictionary).length - 1;
 export default class Home extends Component {
   /*
    * Stage 1: initial display of website. Next Step: user clicks "Start"
@@ -28,6 +29,7 @@ export default class Home extends Component {
       sender: "",
       showCardContents: false,
       showLoading: false, // show loading bar after submitting a card
+      cardDesign: 20,
     };
 
     this.handleFormData = this.handleFormData.bind(this);
@@ -42,7 +44,8 @@ export default class Home extends Component {
   }
 
   async handleFormSubmit() {
-    const { message, recipientEmail, recipientName, sender } = this.state;
+    // eslint-disable-next-line
+    const { message, recipientEmail, recipientName, sender, cardDesign } = this.state;
     this.setState({ showLoading: true });
     // REQUIRED: "message", "recipientName", "recipientEmail", "sender", "cardDesign"
     try {
@@ -51,11 +54,13 @@ export default class Home extends Component {
         recipientName,
         recipientEmail,
         sender,
-        cardDesign: 1,
+        cardDesign: 20,
       });
       setTimeout(() => this.setState({ stage: 5 }), 1500);
     } catch (e) {
+      // eslint-disable-next-line
       console.log(e, e.response);
+      // eslint-disable-next-line
       if (!alert("Error with card creation. Press OK to try again.")) {
         this.setState({ showLoading: false, stage: 2 });
       }
@@ -64,10 +69,37 @@ export default class Home extends Component {
 
   render() {
     // Conditionally render components based on what stage we are on
-    const { stage, message, recipientEmail, recipientName, showCardContents, showLoading } = this.state;
+    const { stage, message, recipientEmail, recipientName, showCardContents, showLoading, cardDesign } = this.state;
     let stageComps;
+
     if (stage === 1) {
-      stageComps = <StageButton message="Get Started" handleClick={() => this.setState({ stage: 2 })} />;
+      stageComps = (
+        <>
+          {/* https://stackoverflow.com/questions/19999877/loop-seamlessly-over-an-array-forwards-or-backwards-given-an-offset-larger-than/20000227 */}
+          <AwesomeButton
+            className="awesome-button"
+            onPress={() =>
+              this.setState((state) => ({
+                // decrease card design
+                cardDesign: (((state.cardDesign - 1) % cardAmt) + cardAmt) % cardAmt,
+              }))
+            }
+          >
+            &#x2190;
+          </AwesomeButton>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <AwesomeButton
+            className="awesome-button"
+            // increase card design
+            onPress={() => this.setState((state) => ({ cardDesign: (state.cardDesign + 1) % cardAmt }))}
+          >
+            &#x2192;
+          </AwesomeButton>
+          <br />
+          <br />
+          <StageButton message="Get Started" handleClick={() => this.setState({ stage: 2 })} />
+        </>
+      );
     } else if (stage === 2) {
       stageComps = (
         <>
@@ -123,7 +155,11 @@ export default class Home extends Component {
     return (
       <>
         <div className="container has-text-centered">
-          <Card showCardContents={(showCardContents || stage === 3) && stage !== 5} message={message} />
+          <Card
+            showCardContents={(showCardContents || stage === 3) && stage !== 5}
+            message={message}
+            cardDesign={cardDesign}
+          />
           {stageComps}
           <br />
           <br />

@@ -38,6 +38,7 @@ export default class GuestView extends Component {
       })
       .catch((err) => {
         // TODO display error message
+        // eslint-disable-next-line
         console.log(err, err.response);
       });
   }
