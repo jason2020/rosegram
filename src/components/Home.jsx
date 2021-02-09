@@ -93,7 +93,11 @@ export default class Home extends Component {
           </AwesomeButton>
           <br />
           <br />
-          <StageButton message="Get Started" handleClick={() => this.setState({ stage: 2 })} />
+          <StageButton
+            message="Get Started"
+            handleClick={() => this.setState({ stage: 2 })}
+            disabled={cardDesign === 0}
+          />
         </>
       );
     } else if (stage === 2) {
