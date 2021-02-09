@@ -91,7 +91,7 @@ class CardController {
       };
 
       // Generate Card URL
-      const cardUrl = `${escape(recipientName)}-${Math.random().toString(36).substring(7)}`;
+      const cardUrl = `${encodeURIComponent(recipientName)}-${Math.random().toString(36).substring(7)}`;
 
       // Create the Card in DB
       const card = await Card.create({
@@ -121,10 +121,10 @@ class CardController {
       if (!req.params.cardUrl) return res.status(422).send("Missing cardUrl URL parameter.");
 
       // Find the card in the DB
-      const card = await Card.findOne({ where: { cardUrl: req.params.cardUrl } });
+      const card = await Card.findOne({ where: { cardUrl: encodeURIComponent(req.params.cardUrl) } });
 
       // Check for 404
-      if (!card) return res.status(404).send(`Card with card url ${req.params.cardUrl} not found!`);
+      if (!card) return res.status(404).send(`Card with card url ${encodeURIComponent(req.params.cardUrl)} not found!`);
 
       // Return found card
       return res.status(200).json(card.toJSON());
