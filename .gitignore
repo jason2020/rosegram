@@ -111,3 +111,5 @@ dist
 
 # React
 build/
+
+.DS_Store
