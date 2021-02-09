@@ -23,7 +23,7 @@ function sendRosegram(cardUrl, recipientEmail) {
           Data: `<html><body>
               <p>To: ${recipientEmail}</p>
               <p>You received a rosegram! View it here: </p>
-              <a href="${process.env.FRONTEND_DOMAIN}/card/${cardUrl}">http://${process.env.FRONTEND_DOMAIN}/card/${cardUrl}</a>
+              <a href="${process.env.FRONTEND_DOMAIN}/card/${cardUrl}">${process.env.FRONTEND_DOMAIN}/card/${cardUrl}</a>
             </body></html>`,
         },
         Text: {
