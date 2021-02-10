@@ -25,7 +25,7 @@ const Card = sequelize.define(
   {
     // Model attributes are defined here
     message: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       // allowNull defaults to true
       allowNull: false,
     },
