@@ -12,6 +12,8 @@
     "express": "^4.17.1",
     "formik": "^2.2.6",
     "morgan": "^1.10.0",
+    "nodemailer": "^6.4.18",
+    "nodemailer-plugin-inline-base64": "^2.1.1",
     "pg": "^8.5.1",
     "pg-hstore": "^2.3.3",
     "prop-types": "^15.7.2",
@@ -31,7 +33,8 @@
     "dev": "PORT=3001 nodemon -r dotenv/config index.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "valentinesfire": "pm2 start valentinesfire.js --restart-delay=30000 --node-args='-r dotenv/config'"
   },
   "eslintConfig": {
     "extends": [
