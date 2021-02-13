@@ -64,7 +64,7 @@ export default class GuestView extends Component {
             <div className="content">
               <h5>
                 <strong>From: </strong>
-                {sender}
+                {sender || "Anonymous"}
               </h5>
             </div>
           </div>
