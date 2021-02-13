@@ -23,7 +23,7 @@ export const designDictionary = {
   17: "/card-options/valentines-day-plants.png",
   18: "/card-options/valentines-day-stars.png",
   19: "/card-options/youre-the-coolest.png",
-  20: "/card-options/front.png",
+  20: "/card-options/thank-you.png",
 };
 
 export default class Card extends Component {
