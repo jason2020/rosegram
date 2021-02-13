@@ -61,6 +61,14 @@ const Card = sequelize.define(
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
+    senatorVisited: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    visitCount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
   },
   {
     // Other model options go here
@@ -125,6 +133,10 @@ class CardController {
 
       // Check for 404
       if (!card) return res.status(404).send(`Card with card url ${encodeURIComponent(req.params.cardUrl)} not found!`);
+
+      // Mark visited by a senator (used to find the missing cards after SES limit reached)
+      card.senatorVisited = true;
+      await card.save();
 
       // Return found card
       return res.status(200).json(card.toJSON());
